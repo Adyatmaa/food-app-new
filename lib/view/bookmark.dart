@@ -70,6 +70,7 @@ class _BookmarkState extends State<Bookmark> {
                                 child: Text(
                                   bookmarks[index].strMeal,
                                   style: GoogleFonts.manrope(
+                                      color: Colors.black,
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500),
                                 ),
