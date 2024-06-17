@@ -3,11 +3,9 @@ import 'package:foodapp_new/main.dart';
 import 'package:foodapp_new/model/meals.dart';
 import 'package:foodapp_new/spref.dart';
 import 'package:foodapp_new/view/bookmark.dart';
-import 'package:foodapp_new/view/categories.dart';
 import 'package:foodapp_new/view/detail_makanan.dart';
 import 'package:foodapp_new/view/profile.dart';
 import 'package:foodapp_new/view_model/fetch_meals.dart';
-import 'package:foodapp_new/view_model/fetch_random.dart';
 import 'package:google_fonts/google_fonts.dart';
 import "package:flutter_feather_icons/flutter_feather_icons.dart";
 
@@ -22,9 +20,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Rnd rnd = Rnd();
+  // List<Makanan> detailMakanan = [];
+  Repository repo = Repository();
   bool tema = false;
   late Future<List<Meals>> futureData;
+  late List<bool> isBookmarkClickedList;
 
   @override
   void initState() {
@@ -99,8 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: 0,
       ),
       resizeToAvoidBottomInset: false,
+      backgroundColor: const Color(0xfffF0F6F4),
       body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
         child: SafeArea(
             // width: double.infinity,
             // height: double.infinity,
@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 24,
             ),
-            banner(context),
+            banner(),
             const SizedBox(
               height: 20,
             ),
@@ -129,24 +129,15 @@ class _HomeScreenState extends State<HomeScreen> {
               alignment: AlignmentDirectional.topStart,
               child: Column(
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(bottom: 20),
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Text(
-                      'Have No Idea What to Cook?',
-                      style: GoogleFonts.manrope(
-                          fontSize: 26, fontWeight: FontWeight.w800),
-                    ),
-                  ),
-                  Container(
+                  Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Maybe try this...',
+                          'Quick & Easy',
                           style: GoogleFonts.manrope(
-                              fontSize: 20, fontWeight: FontWeight.w500),
+                              fontSize: 24, fontWeight: FontWeight.w800),
                         ),
                       ],
                     ),
@@ -158,118 +149,72 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: MediaQuery.of(context).size.width,
                     width: MediaQuery.of(context).size.width,
                     child: FutureBuilder(
-                        future: rnd.fetchData(),
+                        future: repo.fetchData(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           if (snapshot.hasData) {
+                            List<bool> isBookmarkClickedList =
+                                List.filled(snapshot.data!.length, false);
                             return ListView.builder(
-                                physics: NeverScrollableScrollPhysics(),
+                                // itemCount: snapshot.data!.length,
                                 itemCount: snapshot.data!.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   var meal = snapshot.data![index];
                                   // print(meal.strMeal);
                                   return GestureDetector(
-                                      onTap: () {},
+                                      onTap: () {
+                                        setState(() {
+                                          isBookmarkClickedList[index] =
+                                              !isBookmarkClickedList[index];
+                                        });
+                                        print('Bookmark Clicked');
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                          builder: (context) {
+                                            return DetailMakanan(food: meal);
+                                          },
+                                        ));
+                                      },
                                       child: Container(
-                                        // height: 500,
+                                        height: 100,
                                         width:
                                             MediaQuery.of(context).size.width,
                                         decoration: BoxDecoration(
-                                            color: tema
-                                                ? Colors.green.shade200
-                                                : Colors.green.shade700,
-                                            // border: Border.all(),
+                                            color: Colors.green.shade200,
                                             borderRadius:
                                                 BorderRadius.circular(10)),
                                         margin: EdgeInsets.symmetric(
                                             horizontal: 12, vertical: 4),
-                                        child: Column(
+                                        child: Row(
                                           children: [
                                             Container(
+                                              height: 100,
+                                              width: 100,
                                               decoration: BoxDecoration(
-                                                // border: Border.all(),
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    height: 108,
-                                                    width: 108,
-                                                    decoration: BoxDecoration(
-                                                        image: DecorationImage(
-                                                            fit: BoxFit.cover,
-                                                            image: NetworkImage(meal
-                                                                .strMealThumb)),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10)),
-                                                  ),
-                                                  Column(
-                                                    children: [
-                                                      Container(
-                                                        width: 260,
-                                                        // height: 50,
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                left: 10,
-                                                                top: 10),
-                                                        child: Text(
-                                                          meal.strMeal,
-                                                          style: GoogleFonts
-                                                              .manrope(
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        width: 260,
-                                                        // height: 50,
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                left: 10,
-                                                                top: 10),
-                                                        child: Text(
-                                                          "This meal is kind of " + meal.strCategory + " meals",
-                                                          style: GoogleFonts
-                                                              .manrope(
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
+                                                  image: DecorationImage(
+                                                      image: NetworkImage(
+                                                          meal.strMealThumb)),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
                                             ),
-                                            // Container(
-                                            //   alignment: Alignment.centerLeft,
-                                            //   padding: EdgeInsets.only(
-                                            //       top: 20, left: 20),
-                                            //   child: Text(
-                                            //     'Cook Instructions',
-                                            //     style: GoogleFonts.manrope(
-                                            //         fontSize: 22,
-                                            //         fontWeight:
-                                            //             FontWeight.w600),
-                                            //   ),
-                                            // ),
-                                            // Container(
-                                            //     padding: EdgeInsets.all(10),
-                                            //     alignment: Alignment.centerLeft,
-                                            //     child: Text(
-                                            //       meal.strInstructions,
-                                            //       style: GoogleFonts.manrope(
-                                            //           fontSize: 18,
-                                            //           fontWeight:
-                                            //               FontWeight.w500),
-                                            //     )),
+                                            Column(
+                                              children: [
+                                                Container(
+                                                  width: 260,
+                                                  // height: 50,
+                                                  padding: EdgeInsets.only(
+                                                      left: 10, top: 10),
+                                                  child: Text(
+                                                    meal.strMeal,
+                                                    style: GoogleFonts.manrope(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
                                           ],
                                         ),
                                       ));
@@ -340,7 +285,7 @@ Widget searchBar() => Container(
       ),
     );
 
-Widget banner(BuildContext context) => AspectRatio(
+Widget banner() => AspectRatio(
       aspectRatio: 345 / 170,
       child: Container(
         clipBehavior: Clip.hardEdge,
@@ -377,13 +322,7 @@ Widget banner(BuildContext context) => AspectRatio(
                       height: 10,
                     ),
                     ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return CatPage();
-                          },
-                        ));
-                      },
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                           // ignore: deprecated_member_use
                           backgroundColor: Colors.white,

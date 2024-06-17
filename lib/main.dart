@@ -14,6 +14,7 @@ Future<bool> isTheme() async {
   return tema;
 }
 
+// ignore: must_be_immutable
 class MyWidget extends StatelessWidget {
   late bool tema;
    MyWidget({super.key, required this.tema});
