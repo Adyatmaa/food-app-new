@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodapp_new/view/bookmark.dart';
 import 'package:foodapp_new/view/home.dart';
+import 'package:foodapp_new/view/search.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -18,11 +19,16 @@ class Profile extends StatelessWidget {
         elevation: 0,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: Colors.grey,
         selectedItemColor: Colors.greenAccent,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite_border),
@@ -48,7 +54,7 @@ class Profile extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Bookmark(),
+                  builder: (context) => SearchPage(),
                 ),
               );
               break;
@@ -57,13 +63,13 @@ class Profile extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Profile(),
+                  builder: (context) => Bookmark(),
                 ),
               );
               break;
           }
         },
-        currentIndex: 2,
+        currentIndex: 3,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 40),

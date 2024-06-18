@@ -6,6 +6,7 @@ import 'package:foodapp_new/view/bookmark.dart';
 import 'package:foodapp_new/view/categories.dart';
 import 'package:foodapp_new/view/detail_makanan.dart';
 import 'package:foodapp_new/view/profile.dart';
+import 'package:foodapp_new/view/search.dart';
 import 'package:foodapp_new/view_model/fetch_meals.dart';
 import 'package:foodapp_new/view_model/fetch_random.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -51,11 +52,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: Colors.grey,
         selectedItemColor: Colors.greenAccent,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite_border),
@@ -68,16 +74,23 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         onTap: (int index) {
           switch (index) {
-            case 0:
+            // case 0:
+            //   Navigator.pushReplacement(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (context) => HomeScreen(),
+            //     ),
+            //   );
+            //   break;
+            case 1:
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => HomeScreen(),
+                  builder: (context) => SearchPage(),
                 ),
               );
               break;
-            case 1:
-              // Navigasi ke halaman ProfilePage
+            case 2:
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
@@ -85,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               );
               break;
-            case 2:
+            case 3:
               // Navigasi ke halaman ProfilePage
               Navigator.pushReplacement(
                 context,
@@ -98,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         currentIndex: 0,
       ),
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         physics: NeverScrollableScrollPhysics(),
         child: SafeArea(
@@ -113,7 +126,8 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 24,
             ),
-            searchBar(),
+            // Search bar
+
             const SizedBox(
               height: 24,
             ),
@@ -234,7 +248,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 left: 10,
                                                                 top: 10),
                                                         child: Text(
-                                                          "This meal is kind of " + meal.strCategory + " meals",
+                                                          "This meal is kind of " +
+                                                              meal.strCategory +
+                                                              " meals",
                                                           style: GoogleFonts
                                                               .manrope(
                                                                   fontSize: 18,
@@ -248,28 +264,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ],
                                               ),
                                             ),
-                                            // Container(
-                                            //   alignment: Alignment.centerLeft,
-                                            //   padding: EdgeInsets.only(
-                                            //       top: 20, left: 20),
-                                            //   child: Text(
-                                            //     'Cook Instructions',
-                                            //     style: GoogleFonts.manrope(
-                                            //         fontSize: 22,
-                                            //         fontWeight:
-                                            //             FontWeight.w600),
-                                            //   ),
-                                            // ),
-                                            // Container(
-                                            //     padding: EdgeInsets.all(10),
-                                            //     alignment: Alignment.centerLeft,
-                                            //     child: Text(
-                                            //       meal.strInstructions,
-                                            //       style: GoogleFonts.manrope(
-                                            //           fontSize: 18,
-                                            //           fontWeight:
-                                            //               FontWeight.w500),
-                                            //     )),
                                           ],
                                         ),
                                       ));
@@ -319,26 +313,7 @@ class _HomeScreenState extends State<HomeScreen> {
       );
 }
 
-Widget searchBar() => Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(14)),
-      child: TextFormField(
-        decoration: InputDecoration(
-            prefixIcon: const Icon(
-              FeatherIcons.search,
-              color: Color(0xfffb1b1b1),
-            ),
-            border: InputBorder.none,
-            hintText: "Search any recipe...",
-            hintStyle: GoogleFonts.manrope(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: const Color(0xfffB1B1B1),
-                height: 170 / 100)),
-      ),
-    );
+// Widget searchBar(BuildContext context) => ;
 
 Widget banner(BuildContext context) => AspectRatio(
       aspectRatio: 345 / 170,

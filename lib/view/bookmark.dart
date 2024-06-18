@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodapp_new/model/mark.dart';
 import 'package:foodapp_new/view/home.dart';
 import 'package:foodapp_new/view/profile.dart';
+import 'package:foodapp_new/view/search.dart';
 import 'package:foodapp_new/view_model/database.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -90,11 +91,16 @@ class _BookmarkState extends State<Bookmark> {
             }),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: Colors.grey,
         selectedItemColor: Colors.greenAccent,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite_border),
@@ -116,9 +122,22 @@ class _BookmarkState extends State<Bookmark> {
               );
               break;
             case 1:
-              // Navigasi ke halaman Bookmark (tidak perlu navigasi ulang)
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SearchPage(),
+                ),
+              );
               break;
             case 2:
+            // Navigator.pushReplacement(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => Profile(),
+            //   ),
+            // );
+            // break;
+            case 3:
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
@@ -128,7 +147,7 @@ class _BookmarkState extends State<Bookmark> {
               break;
           }
         },
-        currentIndex: 1,
+        currentIndex: 2,
       ),
     );
   }
