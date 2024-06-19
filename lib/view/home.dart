@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:foodapp_new/main.dart';
 import 'package:foodapp_new/model/meals.dart';
 import 'package:foodapp_new/spref.dart';
+import 'package:foodapp_new/theme_notifier.dart';
 import 'package:foodapp_new/view/bookmark.dart';
 import 'package:foodapp_new/view/categories.dart';
 import 'package:foodapp_new/view/detail_makanan.dart';
@@ -10,14 +10,13 @@ import 'package:foodapp_new/view/search.dart';
 import 'package:foodapp_new/view_model/fetch_meals.dart';
 import 'package:foodapp_new/view_model/fetch_random.dart';
 import 'package:google_fonts/google_fonts.dart';
-import "package:flutter_feather_icons/flutter_feather_icons.dart";
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:provider/provider.dart';
 
 var category = ["All", "Breakfast", "Lunch", "Dinner"];
 var selectedCategory = 0;
 
 class HomeScreen extends StatefulWidget {
-  // const HomeScreen({super.key});
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -35,12 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void loadTheme() async {
     setState(() {
-      // Baca preferensi tema, atau gunakan tema default jika tidak ada preferensi yang disimpan
       tema = SharedPref.pref?.getBool('tema') ?? false;
     });
   }
 
-  // Metode untuk menyimpan preferensi tema ke SharedPreferences
   void saveTheme(bool newTheme) async {
     SharedPref.pref?.setBool('tema', newTheme);
     setState(() {
@@ -50,6 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
+
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: Colors.grey,
@@ -74,14 +73,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         onTap: (int index) {
           switch (index) {
-            // case 0:
-            //   Navigator.pushReplacement(
-            //     context,
-            //     MaterialPageRoute(
-            //       builder: (context) => HomeScreen(),
-            //     ),
-            //   );
-            //   break;
             case 1:
               Navigator.pushReplacement(
                 context,
@@ -99,7 +90,6 @@ class _HomeScreenState extends State<HomeScreen> {
               );
               break;
             case 3:
-              // Navigasi ke halaman ProfilePage
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
@@ -111,88 +101,77 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         currentIndex: 0,
       ),
-      // resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         physics: NeverScrollableScrollPhysics(),
         child: SafeArea(
-            // width: double.infinity,
-            // height: double.infinity,
-            child: Column(
-          children: [
-            const SizedBox(
-              height: 24,
-            ),
-            greetings(),
-            const SizedBox(
-              height: 24,
-            ),
-            // Search bar
-
-            const SizedBox(
-              height: 24,
-            ),
-            banner(context),
-            const SizedBox(
-              height: 20,
-            ),
-            // categories(),
-            // const SizedBox(
-            //   height: 16,
-            // ),
-            Align(
-              alignment: AlignmentDirectional.topStart,
-              child: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(bottom: 20),
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Text(
-                      'Have No Idea What to Cook?',
-                      style: GoogleFonts.manrope(
-                          fontSize: 26, fontWeight: FontWeight.w800),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 24,
+              ),
+              greetings(themeNotifier),
+              const SizedBox(
+                height: 24,
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              banner(context),
+              const SizedBox(
+                height: 20,
+              ),
+              Align(
+                alignment: AlignmentDirectional.topStart,
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(bottom: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Text(
+                        'Have No Idea What to Cook?',
+                        style: GoogleFonts.manrope(
+                            fontSize: 26, fontWeight: FontWeight.w800),
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Maybe try this...',
-                          style: GoogleFonts.manrope(
-                              fontSize: 20, fontWeight: FontWeight.w500),
-                        ),
-                      ],
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Maybe try this...',
+                            style: GoogleFonts.manrope(
+                                fontSize: 20, fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.width,
-                    width: MediaQuery.of(context).size.width,
-                    child: FutureBuilder(
-                        future: rnd.fetchData(),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (snapshot.hasData) {
-                            return ListView.builder(
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount: snapshot.data!.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  var meal = snapshot.data![index];
-                                  // print(meal.strMeal);
-                                  return GestureDetector(
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.width,
+                      width: MediaQuery.of(context).size.width,
+                      child: FutureBuilder(
+                          future: rnd.fetchData(),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.hasData) {
+                              return ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: snapshot.data!.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    var meal = snapshot.data![index];
+                                    return GestureDetector(
                                       onTap: () {},
                                       child: Container(
-                                        // height: 500,
                                         width:
                                             MediaQuery.of(context).size.width,
                                         decoration: BoxDecoration(
                                             color: tema
                                                 ? Colors.green.shade200
                                                 : Colors.green.shade700,
-                                            // border: Border.all(),
                                             borderRadius:
                                                 BorderRadius.circular(10)),
                                         margin: EdgeInsets.symmetric(
@@ -201,7 +180,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                           children: [
                                             Container(
                                               decoration: BoxDecoration(
-                                                // border: Border.all(),
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                               ),
@@ -225,7 +203,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     children: [
                                                       Container(
                                                         width: 260,
-                                                        // height: 50,
                                                         padding:
                                                             EdgeInsets.only(
                                                                 left: 10,
@@ -242,7 +219,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       ),
                                                       Container(
                                                         width: 260,
-                                                        // height: 50,
                                                         padding:
                                                             EdgeInsets.only(
                                                                 left: 10,
@@ -266,25 +242,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ],
                                         ),
-                                      ));
-                                });
-                          } else {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        }),
-                  )
-                ],
-              ),
-            )
-          ],
-        )),
+                                      ),
+                                    );
+                                  });
+                            } else {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          }),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  Widget greetings() => Padding(
+  Widget greetings(ThemeNotifier themeNotifier) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -295,25 +273,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontSize: 28, fontWeight: FontWeight.w800),
             ),
             Container(
-              // padding: const EdgeInsets.all(2),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(16))),
               child: IconButton(
-                  onPressed: () {
-                    saveTheme(!tema);
-                  },
-                  icon: Icon(
-                    tema ? FeatherIcons.sun : FeatherIcons.moon,
-                    size: 20,
-                  )),
+                onPressed: () {
+                  themeNotifier.toggleTheme();
+                },
+                icon: Icon(
+                  themeNotifier.isDarkTheme
+                      ? FeatherIcons.sun
+                      : FeatherIcons.moon,
+                  size: 20,
+                ),
+              ),
             )
           ],
         ),
       );
 }
-
-// Widget searchBar(BuildContext context) => ;
 
 Widget banner(BuildContext context) => AspectRatio(
       aspectRatio: 345 / 170,
@@ -360,7 +338,6 @@ Widget banner(BuildContext context) => AspectRatio(
                         ));
                       },
                       style: ElevatedButton.styleFrom(
-                          // ignore: deprecated_member_use
                           backgroundColor: Colors.white,
                           elevation: 0,
                           shape: RoundedRectangleBorder(

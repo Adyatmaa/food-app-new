@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:foodapp_new/tree.dart';
+import 'package:foodapp_new/view/home%20copy.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:foodapp_new/view_model/fetch_login.dart';
 import 'package:cool_alert/cool_alert.dart';
@@ -29,8 +31,8 @@ class _LoginState extends State<Login> {
         email: _controllerEmail.text,
         password: _controllerPassword.text,
       );
-      // _showAlertDialog('login Sucsses');
       _alertshow('Login Succsesfull');
+      MaterialPageRoute(builder: (context) => HomeScreen());
     } on FirebaseAuthException {
       _showAlertDialog('Account not registered. Please sign up.');
     }
@@ -95,7 +97,7 @@ class _LoginState extends State<Login> {
   Widget _submit() {
     return ElevatedButton(
       onPressed: signInWithEmailAndPassword,
-      child: Text('Login',style: GoogleFonts.poppins()),
+      child: Text('Login', style: GoogleFonts.poppins()),
     );
   }
 
@@ -104,9 +106,6 @@ class _LoginState extends State<Login> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('images/start.png'), fit: BoxFit.fill)),
         height: double.infinity,
         width: double.infinity,
         padding: EdgeInsets.all(12),
@@ -125,7 +124,7 @@ class _LoginState extends State<Login> {
                   MaterialPageRoute(builder: (context) => RegistrationPage()),
                 );
               },
-              child: Text('Register here',style: GoogleFonts.poppins()),
+              child: Text('Register here', style: GoogleFonts.poppins()),
             ),
           ],
         ),

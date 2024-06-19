@@ -29,7 +29,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         password: _controllerPassword.text,
       );
       _showAlertDialog('Registration successful');
-      Navigator.pushReplacement(
+      Navigator.push(
           context, MaterialPageRoute(builder: (context) => Login()));
     } on FirebaseAuthException catch (e) {
       _showAlertDialog(e.message ?? 'Registration failed');

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:foodapp_new/tree.dart';
 import 'package:foodapp_new/view/bookmark.dart';
 import 'package:foodapp_new/view/home.dart';
 import 'package:foodapp_new/view/search.dart';
+import 'package:foodapp_new/view_model/fetch_login.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -15,6 +17,19 @@ class Profile extends StatelessWidget {
           style: TextStyle(
               fontSize: 24, color: Colors.black, fontWeight: FontWeight.w700),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout_rounded),
+            color: Colors.black,
+            onPressed: () {
+              Auth().signOut();
+                 Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => tree()),
+                );
+            },
+          )
+        ],
         backgroundColor: Colors.white10,
         elevation: 0,
       ),
