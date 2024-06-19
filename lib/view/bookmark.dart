@@ -32,7 +32,7 @@ class _BookmarkState extends State<Bookmark> {
         width: MediaQuery.of(context).size.width,
         child: FutureBuilder<List<MyMeals>>(
             future: NewDB().list(),
-            builder: (context, snapshot) {
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
               print(snapshot.connectionState);
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(

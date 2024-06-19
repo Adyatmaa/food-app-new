@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:foodapp_new/model/mark.dart';
@@ -8,6 +9,7 @@ import 'package:foodapp_new/view/bookmark.dart';
 import 'package:foodapp_new/view_model/db_new.dart';
 import 'package:foodapp_new/view_model/fetch_random.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path/path.dart';
 // import 'package:food/app/data/makanan.dart';
 
 class DetailMakanan extends StatelessWidget {
@@ -34,7 +36,7 @@ class DetailMakanan extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           child: FutureBuilder(
               future: rnd.fetchData(),
-              builder: (BuildContext context, snapshot) {
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
                   return SingleChildScrollView(
                     child: Container(

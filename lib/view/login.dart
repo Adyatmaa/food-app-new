@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodapp_new/tree.dart';
-import 'package:foodapp_new/view/home%20copy.dart';
+import 'package:foodapp_new/view/home.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:foodapp_new/view_model/fetch_login.dart';
 import 'package:cool_alert/cool_alert.dart';

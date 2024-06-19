@@ -36,7 +36,7 @@ class DetailMakananBk extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           child: FutureBuilder(
               future: rnd.fetchData(),
-              builder: (BuildContext context, snapshot) {
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
                   return SingleChildScrollView(
                     child: Container(
