@@ -1,12 +1,34 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:foodapp_new/tree.dart';
 import 'package:foodapp_new/view/bookmark.dart';
 import 'package:foodapp_new/view/home.dart';
 import 'package:foodapp_new/view/search.dart';
 import 'package:foodapp_new/view_model/fetch_login.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
-class Profile extends StatelessWidget {
-  const Profile({super.key});
+class Profile extends StatefulWidget {
+  Profile({super.key});
+
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  File? _image;
+
+  Future<void> openCamera() async {
+    final pickedImage =
+        await ImagePicker().pickImage(source: ImageSource.camera);
+
+    if (pickedImage == null) {
+      return;
+    }
+    setState(() {
+      _image = File(pickedImage!.path);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,10 +123,27 @@ class Profile extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Colors.amber,
                       borderRadius: BorderRadius.circular(150)),
-                  child: Image.asset(
-                    'assets/logo/poto.jpeg',
-                    fit: BoxFit.fitWidth,
-                  )),
+                  child: _image != null
+                      ? Image.file(_image!)
+                      : Image.asset(
+                          'assets/logo/poto.jpeg',
+                          fit: BoxFit.fitWidth,
+                        )),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            GestureDetector(
+              onTap: () {
+                openCamera();
+              },
+              child: Text(
+                'Take a picture',
+                style: GoogleFonts.manrope(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
             SizedBox(
               height: 24,

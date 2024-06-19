@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:foodapp_new/model/mark.dart';
+import 'package:foodapp_new/model/mealByName.dart';
+import 'package:foodapp_new/view/detail_makanan.dart';
+import 'package:foodapp_new/view/bookmark_detail.dart';
 import 'package:foodapp_new/view/home.dart';
 import 'package:foodapp_new/view/profile.dart';
 import 'package:foodapp_new/view/search.dart';
-import 'package:foodapp_new/view_model/database.dart';
+import 'package:foodapp_new/view_model/db_new.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Bookmark extends StatefulWidget {
@@ -20,7 +23,7 @@ class _BookmarkState extends State<Bookmark> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Your favourite foods',
+          'Your favourite meals',
           style: GoogleFonts.manrope(fontSize: 24, fontWeight: FontWeight.w500),
         ),
       ),
@@ -28,8 +31,9 @@ class _BookmarkState extends State<Bookmark> {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: FutureBuilder<List<MyMeals>>(
-            future: Nyarap().list(),
+            future: NewDB().list(),
             builder: (context, snapshot) {
+              print(snapshot.connectionState);
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
                   child: CircularProgressIndicator(),
@@ -37,55 +41,87 @@ class _BookmarkState extends State<Bookmark> {
               } else if (snapshot.hasError) {
                 print(snapshot.data);
                 return Center(
-                  child: Text('error1 ${snapshot.error}'),
+                  child: Text('error ${snapshot.error}'),
                 );
-              } else if (snapshot.hasData) {
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                print('kosong');
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'You have not save any meals yet',
+                        style: GoogleFonts.manrope(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        'Try to save it with clicking Bookmark button',
+                        style: GoogleFonts.manrope(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
                 final bookmarks = snapshot.data as List<MyMeals>;
                 return ListView.builder(
                   itemCount: bookmarks.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      height: 100,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          color: Colors.green.shade100,
-                          borderRadius: BorderRadius.circular(10)),
-                      margin: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 100,
-                            width: 100,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                        bookmarks[index].strMealThumb)),
-                                borderRadius: BorderRadius.circular(10)),
-                          ),
-                          Column(
-                            children: [
-                              Container(
-                                width: 260,
-                                // height: 50,
-                                padding: EdgeInsets.only(left: 10, top: 10),
-                                child: Text(
-                                  bookmarks[index].strMeal,
-                                  style: GoogleFonts.manrope(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500),
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return DetailMakananBk(food: bookmarks[index]);
+                          },
+                        ));
+                      },
+                      child: Container(
+                        height: 100,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            color: Colors.green.shade100,
+                            borderRadius: BorderRadius.circular(10)),
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                          bookmarks[index].strMealThumb)),
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                            Column(
+                              children: [
+                                Container(
+                                  width: 260,
+                                  // height: 50,
+                                  padding: EdgeInsets.only(left: 10, top: 10),
+                                  child: Text(
+                                    bookmarks[index].strMeal,
+                                    style: GoogleFonts.manrope(
+                                        color: Colors.black,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500),
+                                  ),
                                 ),
-                              ),
-                            ],
-                          )
-                        ],
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     );
                   },
-                );
-              } else {
-                return Center(
-                  child: Text('No data'),
                 );
               }
             }),
@@ -130,13 +166,13 @@ class _BookmarkState extends State<Bookmark> {
               );
               break;
             case 2:
-            // Navigator.pushReplacement(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => Profile(),
-            //   ),
-            // );
-            // break;
+              // Navigator.pushReplacement(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => Profile(),
+              //   ),
+              // );
+              break;
             case 3:
               Navigator.pushReplacement(
                 context,

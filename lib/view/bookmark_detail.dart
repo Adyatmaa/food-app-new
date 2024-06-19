@@ -10,9 +10,9 @@ import 'package:foodapp_new/view_model/fetch_random.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:food/app/data/makanan.dart';
 
-class DetailMakanan extends StatelessWidget {
-  final MealByName food;
-  DetailMakanan({Key? key, required this.food});
+class DetailMakananBk extends StatelessWidget {
+  final MyMeals food;
+  DetailMakananBk({Key? key, required this.food});
 
   Rnd rnd = Rnd();
 
@@ -22,6 +22,8 @@ class DetailMakanan extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
           title: Text(
             food.strMeal,
             style:
@@ -42,8 +44,8 @@ class DetailMakanan extends StatelessWidget {
                       child: Column(
                         children: [
                           Container(
-                            margin: EdgeInsets.all(12),
                             height: 250,
+                            margin: EdgeInsets.all(12),
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
@@ -57,9 +59,6 @@ class DetailMakanan extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
-                                  height: 16,
-                                ),
                                 Text(
                                   food.strMeal +
                                       ' is a ' +
@@ -92,20 +91,12 @@ class DetailMakanan extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () async {
-                              final newbk = MyMeals(
-                                  idMeal: food.idMeal,
-                                  strMeal: food.strMeal,
-                                  strCategory: food.strCategory,
-                                  strArea: food.strArea,
-                                  strInstructions: food.strInstructions,
-                                  strMealThumb: food.strMealThumb);
-
-                              await NewDB().insert(newbk);
+                              await NewDB().delete(food.idMeal);
                               print('masuk');
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                       content:
-                                          Text('This food has been saved')));
+                                          Text('This meal has been removed')));
                               Navigator.pushReplacement(context,
                                   MaterialPageRoute(
                                 builder: (context) {
@@ -125,7 +116,7 @@ class DetailMakanan extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'Add to Bookmark',
+                                    'Remove from Bookmark',
                                     style: GoogleFonts.manrope(fontSize: 18),
                                   ),
                                   SizedBox(
