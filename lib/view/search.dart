@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:foodapp_new/model/mealByName.dart';
 import 'package:foodapp_new/view/bookmark.dart';
+import 'package:foodapp_new/view/detail_makanan.dart';
 import 'package:foodapp_new/view/home.dart';
 import 'package:foodapp_new/view/profile.dart';
+import 'package:foodapp_new/view_model/fetch_search.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -17,19 +20,17 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController _search = TextEditingController();
 
-  List _meals = [];
+  List<MealByName> _meals = [];
+  final Searcher src = Searcher();
 
   Future<void> _searchMeals(String query) async {
-    final url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=$query';
-    final response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
+    try {
+      final meals = await src.searchMealsByName(query);
       setState(() {
-        _meals = data['meals'] ?? [];
+        _meals = meals;
       });
-    } else {
-      // Handle error
-      print('Error: ${response.statusCode}');
+    } catch (e) {
+      print('Error: $e');
     }
   }
 
@@ -80,15 +81,26 @@ class _SearchPageState extends State<SearchPage> {
                   : ListView.builder(
                       itemCount: _meals.length,
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(_meals[index]['strMeal']),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(_meals[index]['strArea'] ?? 'No area info'),
-                              Text(_meals[index]['strCategory'] ??
-                                  'No category info'),
-                            ],
+                        var meal = _meals[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return DetailMakanan(food: meal);
+                              },
+                            ));
+                          },
+                          child: ListTile(
+                            title: Text(_meals[index].strMeal),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    _meals[index].strArea ?? 'No area info'),
+                                Text(_meals[index].strCategory ??
+                                    'No category info'),
+                              ],
+                            ),
                           ),
                         );
                       },

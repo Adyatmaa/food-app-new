@@ -1,20 +1,19 @@
-// ignore_for_file: use_full_hex_values_for_flutter_colors
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:foodapp_new/model/mark.dart';
-import 'package:foodapp_new/model/meals.dart';
+import 'package:foodapp_new/model/mealByName.dart';
 import 'package:foodapp_new/view_model/database.dart';
-import 'package:foodapp_new/view_model/fetch_meals.dart';
+import 'package:foodapp_new/view_model/fetch_random.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:food/app/data/makanan.dart';
 
 class DetailMakanan extends StatelessWidget {
-  final Meals food;
+  final MealByName food;
   DetailMakanan({Key? key, required this.food});
 
-  Repository repo = Repository();
+  Rnd rnd = Rnd();
 
   int index = 0;
 
@@ -23,7 +22,7 @@ class DetailMakanan extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            'Chicken Dish',
+            '',
             style:
                 GoogleFonts.manrope(fontSize: 20, fontWeight: FontWeight.w800),
           ),
@@ -33,13 +32,12 @@ class DetailMakanan extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: FutureBuilder(
-              future: repo.fetchData(),
+              future: rnd.fetchData(),
               builder: (BuildContext context, snapshot) {
                 if (snapshot.hasData) {
-                  return Container(
+                  return SingleChildScrollView(
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
                       child: Column(
                         children: [
                           Container(
@@ -58,16 +56,40 @@ class DetailMakanan extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Food Name',
+                                  food.strMeal,
                                   style: GoogleFonts.manrope(
                                       fontSize: 26,
                                       fontWeight: FontWeight.w600),
                                 ),
+                                SizedBox(
+                                  height: 16,
+                                ),
                                 Text(
-                                  food.strMeal,
+                                  food.strMeal +
+                                      ' is a ' +
+                                      food.strArea +
+                                      ' ' +
+                                      food.strCategory,
+                                  style: GoogleFonts.manrope(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 16,
+                                ),
+                                Text(
+                                  'Here is how to cook ' + food.strMeal,
                                   style: GoogleFonts.manrope(
                                       fontSize: 20,
-                                      fontWeight: FontWeight.w400),
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(
+                                  height: 16,
+                                ),
+                                Text(
+                                  food.strInstructions,
+                                  style: GoogleFonts.manrope(),
                                 ),
                               ],
                             ),
