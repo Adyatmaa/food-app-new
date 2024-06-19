@@ -7,8 +7,7 @@ import 'package:foodapp_new/view/home.dart';
 import 'package:foodapp_new/view/profile.dart';
 import 'package:foodapp_new/view_model/fetch_search.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+
 
 class SearchPage extends StatefulWidget {
   SearchPage({super.key});

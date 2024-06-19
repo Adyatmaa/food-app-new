@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodapp_new/view/mealByCat.dart';
 import 'package:foodapp_new/view_model/fetch_categories.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -37,7 +38,13 @@ class CatPage extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   var cat = snapshot.data![index];
                   return GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MealByCat(mealsByCat: cat.strCategory),
+                          ));
+                    },
                     child: Container(
                       margin: EdgeInsets.all(4),
                       decoration: BoxDecoration(

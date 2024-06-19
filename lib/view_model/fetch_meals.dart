@@ -4,11 +4,11 @@ import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 
 class Repository {
-  final String apiUrl =
-      'https://www.themealdb.com/api/json/v1/1/filter.php?c=Chicken';
+  Future<List<Meals>> fetchData(String query) async {
+    final String api =
+        'https://www.themealdb.com/api/json/v1/1/filter.php?c=$query';
 
-  Future<List<Meals>> fetchData() async {
-    Response response = await http.get(Uri.parse(apiUrl));
+    Response response = await http.get(Uri.parse(api));
     List<Meals> mealsData;
 
     if (response.statusCode == 200) {

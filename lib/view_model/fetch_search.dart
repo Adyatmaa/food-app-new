@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:foodapp_new/model/mealByName.dart';
-import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 
 class Searcher {

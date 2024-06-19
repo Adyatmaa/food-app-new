@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:foodapp_new/model/mark.dart';
-import 'package:foodapp_new/model/mealByName.dart';
-import 'package:foodapp_new/view/detail_makanan.dart';
 import 'package:foodapp_new/view/bookmark_detail.dart';
 import 'package:foodapp_new/view/home.dart';
 import 'package:foodapp_new/view/profile.dart';

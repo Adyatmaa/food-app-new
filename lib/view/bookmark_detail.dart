@@ -1,9 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:foodapp_new/model/mark.dart';
-import 'package:foodapp_new/model/mealByName.dart';
 import 'package:foodapp_new/view/bookmark.dart';
 import 'package:foodapp_new/view_model/db_new.dart';
 import 'package:foodapp_new/view_model/fetch_random.dart';

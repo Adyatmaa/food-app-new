@@ -1,15 +1,11 @@
-import 'dart:ffi';
-
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:foodapp_new/model/mark.dart';
 import 'package:foodapp_new/model/mealByName.dart';
 import 'package:foodapp_new/view/bookmark.dart';
 import 'package:foodapp_new/view_model/db_new.dart';
 import 'package:foodapp_new/view_model/fetch_random.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:path/path.dart';
 // import 'package:food/app/data/makanan.dart';
 
 class DetailMakanan extends StatelessWidget {
@@ -19,6 +15,14 @@ class DetailMakanan extends StatelessWidget {
   Rnd rnd = Rnd();
 
   int index = 0;
+  void showAlert(BuildContext context, String message) {
+    CoolAlert.show(
+        context: context,
+        type: CoolAlertType.success,
+        text: message,
+        animType: CoolAlertAnimType.slideInUp,
+        backgroundColor: Color.fromARGB(255, 35, 23, 80));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +40,7 @@ class DetailMakanan extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           child: FutureBuilder(
               future: rnd.fetchData(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
+              builder: (context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
                   return SingleChildScrollView(
                     child: Container(
@@ -104,22 +108,22 @@ class DetailMakanan extends StatelessWidget {
 
                               await NewDB().insert(newbk);
                               print('masuk');
+                              // showAlert(context, 'message');
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                       content:
                                           Text('This food has been saved')));
-                              Navigator.pushReplacement(context,
+                              Navigator.pushReplacement(
+                                  context,
                                   MaterialPageRoute(
-                                builder: (context) {
-                                  return Bookmark();
-                                },
-                              ));
+                                    builder: (context) => Bookmark(),
+                                  ));
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               height: 52,
-                              margin:
-                                  EdgeInsets.only(top: 16, right: 60, left: 60, bottom: 20),
+                              margin: EdgeInsets.only(
+                                  top: 16, right: 60, left: 60, bottom: 20),
                               decoration: BoxDecoration(
                                   border: Border.all(),
                                   borderRadius: BorderRadius.circular(10)),
