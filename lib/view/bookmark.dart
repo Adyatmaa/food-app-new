@@ -22,10 +22,11 @@ class _BookmarkState extends State<Bookmark> {
         centerTitle: true,
         title: Text(
           'Your favourite meals',
-          style: GoogleFonts.manrope(fontSize: 24, fontWeight: FontWeight.w500),
+          style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w500),
         ),
       ),
       body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: FutureBuilder<List<MyMeals>>(
@@ -84,8 +85,16 @@ class _BookmarkState extends State<Bookmark> {
                         height: 100,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                            color: Colors.green.shade100,
-                            borderRadius: BorderRadius.circular(10)),
+                          color: Color.fromARGB(255, 230, 236, 230),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 3,
+                              offset: Offset(0, 1)
+                            )
+                          ]
+                        ),
                         margin:
                             EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                         child: Row(
@@ -94,27 +103,38 @@ class _BookmarkState extends State<Bookmark> {
                               height: 100,
                               width: 100,
                               decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: NetworkImage(
-                                          bookmarks[index].strMealThumb)),
-                                  borderRadius: BorderRadius.circular(10)),
-                            ),
-                            Column(
-                              children: [
-                                Container(
-                                  width: 260,
-                                  // height: 50,
-                                  padding: EdgeInsets.only(left: 10, top: 10),
-                                  child: Text(
-                                    bookmarks[index].strMeal,
-                                    style: GoogleFonts.manrope(
-                                        color: Colors.black,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500),
-                                  ),
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                      bookmarks[index].strMealThumb),
                                 ),
-                              ],
-                            )
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                        left: 10, right: 10),
+                                    child: Text(
+                                      bookmarks[index].strMeal,
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines:
+                                          2, // Ensure it doesn't overflow by limiting lines
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),

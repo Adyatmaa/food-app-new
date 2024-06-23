@@ -108,7 +108,6 @@ class DetailMakanan extends StatelessWidget {
 
                               await NewDB().insert(newbk);
                               print('masuk');
-                              // showAlert(context, 'message');
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                       content:

@@ -138,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Text(
                             'Maybe try this...',
-                            style: GoogleFonts.manrope(
+                            style: GoogleFonts.poppins(
                                 fontSize: 20, fontWeight: FontWeight.w500),
                           ),
                         ],
@@ -156,93 +156,108 @@ class _HomeScreenState extends State<HomeScreen> {
                               (BuildContext context, AsyncSnapshot snapshot) {
                             if (snapshot.hasData) {
                               return ListView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: snapshot.data!.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    var meal = snapshot.data![index];
-                                    return GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        decoration: BoxDecoration(
-                                            color: tema
-                                                ? Colors.green.shade200
-                                                : Colors.green.shade700,
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        margin: EdgeInsets.symmetric(
-                                            horizontal: 12, vertical: 4),
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    height: 108,
-                                                    width: 108,
-                                                    decoration: BoxDecoration(
-                                                        image: DecorationImage(
-                                                            fit: BoxFit.cover,
-                                                            image: NetworkImage(meal
-                                                                .strMealThumb)),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10)),
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  var meal = snapshot.data![index];
+                                  return GestureDetector(
+                                    onTap: () {},
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      decoration: BoxDecoration(
+                                          color: tema
+                                              ? Colors.green.shade200
+                                              : Color.fromARGB(
+                                                  255, 222, 235, 205),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black26,
+                                              blurRadius: 10,
+                                              offset: Offset(0, 1),
+                                            )
+                                          ]),
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 4),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                            ),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  height: 108,
+                                                  width: 108,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: NetworkImage(
+                                                          meal.strMealThumb),
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
                                                   ),
-                                                  Column(
+                                                ),
+                                                SizedBox(width: 10),
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
                                                       Container(
-                                                        width: 260,
                                                         padding:
                                                             EdgeInsets.only(
-                                                                left: 10,
                                                                 top: 10),
                                                         child: Text(
                                                           meal.strMeal,
                                                           style: GoogleFonts
-                                                              .manrope(
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
+                                                              .poppins(
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
                                                         ),
                                                       ),
                                                       Container(
-                                                        width: 260,
                                                         padding:
                                                             EdgeInsets.only(
-                                                                left: 10,
                                                                 top: 10),
                                                         child: Text(
                                                           "This meal is kind of " +
                                                               meal.strCategory +
                                                               " meals",
                                                           style: GoogleFonts
-                                                              .manrope(
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
+                                                              .poppins(
+                                                            fontSize: 10,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
                                                         ),
                                                       ),
                                                     ],
-                                                  )
-                                                ],
-                                              ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
-                                    );
-                                  });
+                                    ),
+                                  );
+                                },
+                              );
                             } else {
                               return Center(
                                 child: CircularProgressIndicator(),
@@ -297,9 +312,15 @@ Widget banner(BuildContext context) => AspectRatio(
         clipBehavior: Clip.hardEdge,
         margin: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24),
-          color: const Color(0xfffA7DC63),
-        ),
+            borderRadius: BorderRadius.circular(24),
+            color: const Color(0xfffA7DC63),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 8,
+                offset: Offset(0, 1),
+              )
+            ]),
         child: Stack(
           children: [
             Image.asset(

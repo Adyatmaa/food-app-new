@@ -22,6 +22,7 @@ class CatPage extends StatelessWidget {
         ),
       ),
       body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: FutureBuilder(
@@ -46,11 +47,19 @@ class CatPage extends StatelessWidget {
                           ));
                     },
                     child: Container(
-                      margin: EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all()),
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color.fromARGB(255, 233, 240, 244),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 6,
+                            offset: Offset(1, 1),
+                          ),
+                        ],
+                      ),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Container(
                             margin: EdgeInsets.only(top: 20, bottom: 20),
@@ -58,13 +67,19 @@ class CatPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 image: DecorationImage(
+                                    fit: BoxFit.cover,
                                     image: NetworkImage(cat.strCategoryThumb))),
                           ),
-                          Text(
-                            cat.strCategory,
-                            style: GoogleFonts.manrope(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text(
+                              cat.strCategory,
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
                             ),
                           ),
                         ],

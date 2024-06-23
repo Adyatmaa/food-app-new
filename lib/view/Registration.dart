@@ -59,12 +59,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget _field(String title, TextEditingController controller) {
     return TextField(
       controller: controller,
-      style: TextStyle(color: Colors.white),
+      style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w500),
       obscureText:
           title.toLowerCase() == 'password' ? !isPasswordVisible : false,
       decoration: InputDecoration(
+        border: OutlineInputBorder(),
         filled: true,
-        fillColor: Color.fromARGB(180, 25, 4, 130),
+        fillColor: Color.fromARGB(180, 227, 226, 236),
         // rgb(142, 143, 250)
         labelText: title,
         suffixIcon: title.toLowerCase() == 'password'
@@ -84,21 +85,34 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   Widget _submitButton() {
-    return ElevatedButton(
-      onPressed: createUserWithEmailAndPassword,
-      child: Text('Register',style: GoogleFonts.poppins()),
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ButtonStyle(
+            padding: MaterialStateProperty.all<EdgeInsets>(
+              EdgeInsets.symmetric(vertical: 15),
+            ),
+            backgroundColor: MaterialStateProperty.all<Color>(
+                Color.fromARGB(255, 9, 150, 26)),
+            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8)))),
+        onPressed: createUserWithEmailAndPassword,
+        child: Text('Register',
+            style: GoogleFonts.poppins(
+                color: Colors.white, fontWeight: FontWeight.w700)),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 35, 23, 80),
+      backgroundColor: Color.fromARGB(255, 247, 247, 247),
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text('Register',style: GoogleFonts.poppins(),),
+        title: Text('Register',style: GoogleFonts.poppins(fontWeight: FontWeight.w600),),
       ),
       body: Container(
         // decoration: BoxDecoration(
@@ -111,7 +125,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             _field('Email', _controllerEmail),
             SizedBox(height: 12,),
             _field('Password', _controllerPassword),
-            SizedBox(height: 12,),
+            SizedBox(height: 24,),
             _submitButton(),
           ],
         ),
