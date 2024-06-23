@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:foodapp_new/tree.dart';
 import 'package:foodapp_new/view/bookmark.dart';
 import 'package:foodapp_new/view/home.dart';
+import 'package:foodapp_new/view/login.dart';
 import 'package:foodapp_new/view/search.dart';
 import 'package:foodapp_new/view_model/fetch_login.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,6 +32,30 @@ class _ProfileState extends State<Profile> {
     });
   }
 
+  void showAlert(BuildContext context, String message) {
+    CoolAlert.show(
+      context: context,
+      type: CoolAlertType.success,
+      text: message,
+      animType: CoolAlertAnimType.slideInUp,
+      backgroundColor: Color.fromARGB(255, 35, 23, 80),
+      onConfirmBtnTap: () {
+        Auth().signOut();
+        // Navigator.of(context, rootNavigator: true).pop();
+        Future.delayed(Duration(milliseconds: 100), () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => tree()),
+          );
+        });
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => tree()),
+        // );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,11 +70,12 @@ class _ProfileState extends State<Profile> {
             icon: const Icon(Icons.logout_rounded),
             color: Colors.black,
             onPressed: () {
-              Auth().signOut();
-                 Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => tree()),
-                );
+              showAlert(context, 'Logged out successfully');
+              // Auth().signOut();
+              // Navigator.pushReplacement(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => tree()),
+              // );
             },
           )
         ],

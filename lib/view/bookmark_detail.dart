@@ -1,3 +1,4 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:foodapp_new/model/mark.dart';
 import 'package:foodapp_new/view/bookmark.dart';
@@ -13,6 +14,24 @@ class DetailMakananBk extends StatelessWidget {
   Rnd rnd = Rnd();
 
   int index = 0;
+  void showAlert(BuildContext context, String message) {
+    CoolAlert.show(
+      context: context,
+      type: CoolAlertType.success,
+      text: message,
+      animType: CoolAlertAnimType.slideInUp,
+      backgroundColor: Color.fromARGB(255, 35, 23, 80),
+      onConfirmBtnTap: () {
+        Navigator.of(context, rootNavigator: true).pop();
+        Future.delayed(Duration(milliseconds: 100), () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => Bookmark()),
+          );
+        });
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,22 +108,14 @@ class DetailMakananBk extends StatelessWidget {
                             onTap: () async {
                               await NewDB().delete(food.idMeal);
                               print('masuk');
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content:
-                                          Text('This meal has been removed')));
-                              Navigator.pushReplacement(context,
-                                  MaterialPageRoute(
-                                builder: (context) {
-                                  return Bookmark();
-                                },
-                              ));
+                              showAlert(context,
+                                  'This food has been removed from Bookmark');
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               height: 52,
-                              margin:
-                                  EdgeInsets.only(top: 16, right: 60, left: 60, bottom: 20),
+                              margin: EdgeInsets.only(
+                                  top: 16, right: 60, left: 60, bottom: 20),
                               decoration: BoxDecoration(
                                   border: Border.all(),
                                   borderRadius: BorderRadius.circular(10)),

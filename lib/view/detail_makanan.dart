@@ -17,11 +17,22 @@ class DetailMakanan extends StatelessWidget {
   int index = 0;
   void showAlert(BuildContext context, String message) {
     CoolAlert.show(
-        context: context,
-        type: CoolAlertType.success,
-        text: message,
-        animType: CoolAlertAnimType.slideInUp,
-        backgroundColor: Color.fromARGB(255, 35, 23, 80));
+      context: context,
+      type: CoolAlertType.success,
+      text: message,
+      animType: CoolAlertAnimType.slideInUp,
+      backgroundColor: Color.fromARGB(255, 35, 23, 80),
+      onConfirmBtnTap: () {
+        Navigator.of(context, rootNavigator: true).pop();
+        Future.delayed(Duration(milliseconds: 100), () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Bookmark(),
+              ));
+        });
+      },
+    );
   }
 
   @override
@@ -108,15 +119,7 @@ class DetailMakanan extends StatelessWidget {
 
                               await NewDB().insert(newbk);
                               print('masuk');
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content:
-                                          Text('This food has been saved')));
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Bookmark(),
-                                  ));
+                              showAlert(context, 'This food has been saved');
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width,

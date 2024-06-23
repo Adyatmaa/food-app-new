@@ -30,119 +30,118 @@ class _BookmarkState extends State<Bookmark> {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: FutureBuilder<List<MyMeals>>(
-            future: NewDB().list(),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              print(snapshot.connectionState);
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (snapshot.hasError) {
-                print(snapshot.data);
-                return Center(
-                  child: Text('error ${snapshot.error}'),
-                );
-              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                print('kosong');
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'You have not save any meals yet',
-                        style: GoogleFonts.manrope(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                        ),
+          future: NewDB().list(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            print(snapshot.connectionState);
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              print(snapshot.data);
+              return Center(
+                child: Text('error ${snapshot.error}'),
+              );
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              print('kosong');
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'You have not save any meals yet',
+                      style: GoogleFonts.manrope(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
                       ),
-                      SizedBox(
-                        height: 12,
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      'Try to save it with clicking Bookmark button',
+                      style: GoogleFonts.manrope(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
                       ),
-                      Text(
-                        'Try to save it with clicking Bookmark button',
-                        style: GoogleFonts.manrope(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                final bookmarks = snapshot.data as List<MyMeals>;
-                return ListView.builder(
-                  itemCount: bookmarks.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return DetailMakananBk(food: bookmarks[index]);
-                          },
-                        ));
-                      },
-                      child: Container(
-                        height: 100,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
+                    ),
+                  ],
+                ),
+              );
+            } else {
+              final bookmarks = snapshot.data as List<MyMeals>;
+              return ListView.builder(
+                itemCount: bookmarks.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return DetailMakananBk(food: bookmarks[index]);
+                        },
+                      ));
+                    },
+                    child: Container(
+                      height: 100,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
                           color: Color.fromARGB(255, 230, 236, 230),
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 3,
-                              offset: Offset(0, 1)
-                            )
-                          ]
-                        ),
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                      bookmarks[index].strMealThumb),
-                                ),
-                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.black26,
+                                blurRadius: 3,
+                                offset: Offset(0, 1))
+                          ]),
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                    bookmarks[index].strMealThumb),
                               ),
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.only(
-                                        left: 10, right: 10),
-                                    child: Text(
-                                      bookmarks[index].strMeal,
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.black,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines:
-                                          2, // Ensure it doesn't overflow by limiting lines
+                          ),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  padding:
+                                      EdgeInsets.only(left: 10, right: 10),
+                                  child: Text(
+                                    bookmarks[index].strMeal,
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
                                     ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines:
+                                        2, // Ensure it doesn't overflow by limiting lines
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    );
-                  },
-                );
-              }
-            }),
+                    ),
+                  );
+                },
+              );
+            }
+          },
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: Colors.grey,

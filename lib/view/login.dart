@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:foodapp_new/tree.dart';
 import 'package:foodapp_new/view/home.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,13 +28,7 @@ class _LoginState extends State<Login> {
 
   Future<void> signInWithEmailAndPassword() async {
     try {
-      await Auth().signInWithEmailAndPassword(
-        email: _controllerEmail.text,
-        password: _controllerPassword.text,
-      );
-      _alertshow('Login Succsesfull');
-      Navigator.pushReplacement(context, 
-      MaterialPageRoute(builder: (context) => HomeScreen()));
+      _alertshow(context, 'Login Succsesfull');
     } on FirebaseAuthException {
       _showAlertDialog('Account not registered. Please sign up.');
     }
@@ -59,13 +54,25 @@ class _LoginState extends State<Login> {
     );
   }
 
-  void _alertshow(String message) {
+  void _alertshow(BuildContext context, String message) async {
     CoolAlert.show(
-        context: context,
-        type: CoolAlertType.success,
-        text: message,
-        animType: CoolAlertAnimType.slideInUp,
-        backgroundColor: Color.fromARGB(255, 35, 23, 80));
+      context: context,
+      type: CoolAlertType.success,
+      text: message,
+      animType: CoolAlertAnimType.slideInUp,
+      backgroundColor: Color.fromARGB(255, 35, 23, 80),
+      onConfirmBtnTap: () {
+        Auth().signInWithEmailAndPassword(
+          email: _controllerEmail.text,
+          password: _controllerPassword.text,
+        );
+        // Navigator.of(context, rootNavigator: true).pop();
+        Future.delayed(Duration(milliseconds: 100), () {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => HomeScreen()));
+        });
+      },
+    );
   }
 
   Widget _field(String title, TextEditingController controller) {

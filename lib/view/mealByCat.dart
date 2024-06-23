@@ -49,6 +49,7 @@ class MealByCat extends StatelessWidget {
                 itemBuilder: (context, index) {
                   var mls = snapshot.data![index];
                   return Container(
+                    height: 450,
                     margin: EdgeInsets.all(4),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
