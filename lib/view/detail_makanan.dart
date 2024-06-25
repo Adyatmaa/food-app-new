@@ -1,7 +1,11 @@
+import 'dart:ffi';
+
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:foodapp_new/model/mark.dart';
 import 'package:foodapp_new/model/mealByName.dart';
+import 'package:foodapp_new/noto.dart';
 import 'package:foodapp_new/view/bookmark.dart';
 import 'package:foodapp_new/view_model/db_new.dart';
 import 'package:foodapp_new/view_model/fetch_random.dart';
@@ -15,6 +19,7 @@ class DetailMakanan extends StatelessWidget {
   Rnd rnd = Rnd();
 
   int index = 0;
+
   void showAlert(BuildContext context, String message) {
     CoolAlert.show(
       context: context,
@@ -118,8 +123,14 @@ class DetailMakanan extends StatelessWidget {
                                   strMealThumb: food.strMealThumb);
 
                               await NewDB().insert(newbk);
-                              print('masuk');
-                              showAlert(context, 'This food has been saved');
+                              // print('masuk');
+                              Noto.showNoto(
+                                  title: 'Food App',
+                                  body:
+                                      'New meals has been added to your bookmark',
+                                  payload: food.strMeal);
+                              // showAlert(context, 'This food has been saved');
+                              // print('masu2');
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width,

@@ -8,7 +8,6 @@ import 'package:foodapp_new/view/profile.dart';
 import 'package:foodapp_new/view_model/fetch_search.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 class SearchPage extends StatefulWidget {
   SearchPage({super.key});
 
@@ -21,6 +20,7 @@ class _SearchPageState extends State<SearchPage> {
 
   List<MealByName> _meals = [];
   final Searcher src = Searcher();
+  bool tema = false;
 
   Future<void> _searchMeals(String query) async {
     try {
@@ -76,7 +76,12 @@ class _SearchPageState extends State<SearchPage> {
             ),
             Expanded(
               child: _meals.isEmpty
-                  ? Center(child: Text('Search somethin'))
+                  ? Center(
+                      child: Text(
+                        'Search something here',
+                        style: GoogleFonts.manrope(),
+                      ),
+                    )
                   : ListView.builder(
                       itemCount: _meals.length,
                       itemBuilder: (context, index) {
@@ -89,18 +94,95 @@ class _SearchPageState extends State<SearchPage> {
                               },
                             ));
                           },
-                          child: ListTile(
-                            title: Text(_meals[index].strMeal),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                color: tema
+                                    ? Colors.green.shade200
+                                    : Color.fromARGB(255, 222, 235, 205),
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black26,
+                                    blurRadius: 10,
+                                    offset: Offset(0, 1),
+                                  )
+                                ]),
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 4),
+                            child: Column(
                               children: [
-                                Text(
-                                    _meals[index].strArea ?? 'No area info'),
-                                Text(_meals[index].strCategory ??
-                                    'No category info'),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: 108,
+                                        width: 108,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image:
+                                                NetworkImage(meal.strMealThumb),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                      SizedBox(width: 10),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.only(top: 10),
+                                              child: Text(
+                                                meal.strMeal,
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.only(top: 10),
+                                              child: Text(
+                                                "This meal is kind of " +
+                                                    meal.strCategory +
+                                                    " meals",
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),
+                          // child: ListTile(
+                          //   title: Text(_meals[index].strMeal),
+                          //   subtitle: Column(
+                          //     crossAxisAlignment: CrossAxisAlignment.start,
+                          //     children: [
+                          //       Text(_meals[index].strArea ?? 'No area info'),
+                          //       Text(_meals[index].strCategory ??
+                          //           'No category info'),
+                          //     ],
+                          //   ),
+                          // ),
                         );
                       },
                     ),

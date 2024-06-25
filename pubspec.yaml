@@ -46,6 +46,8 @@ dependencies:
   cool_alert: ^2.0.1
   provider: ^6.1.2
   image_picker: ^0.8.6
+  flutter_local_notifications: ^17.1.2
+  rxdart: ^0.28.0
 
 dev_dependencies:
   flutter_test:
