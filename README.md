@@ -21,18 +21,6 @@ Pada aplikasi ini, SQF LIte digunakan untuk menyimpan makanan favorit yang diamb
 Berikut adalah halaman bookmark makanan.
 ![Screenshot_1714581785](https://github.com/Adyatmaa/food-app-new/assets/139423303/68ae6684-c803-4ee2-8d06-923f6d07ecd5)
 
-
-
-<<<<<<< Updated upstream
-Paket yang digunakan
-cupertino_icons: ^1.0.6
-http: ^1.2.1 
-google_fonts: ^6.2.1 
-flutter_feather_icons: ^2.0.0+1
-sqflite: ^2.3.3
-shared_preferences: ^2.2.3
-path: ^1.9.0
-=======
 # Paket yang digunakan
 
 cupertino_icons: ^1.0.6<br>
@@ -42,7 +30,6 @@ flutter_feather_icons: ^2.0.0+1<br>
 sqflite: ^2.3.3<br>
 shared_preferences: ^2.2.3<br>
 path: ^1.9.0<br>
->>>>>>> Stashed changes
 
 API yang digunakan
 https://www.themealdb.com/api.php 
