@@ -25,8 +25,8 @@ Berikut adalah halaman bookmark makanan.
 
 Paket yang digunakan
 cupertino_icons: ^1.0.6
-http: ^1.2.1
-google_fonts: ^6.2.1
+http: ^1.2.1 
+google_fonts: ^6.2.1 
 flutter_feather_icons: ^2.0.0+1
 sqflite: ^2.3.3
 shared_preferences: ^2.2.3
