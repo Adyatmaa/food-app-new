@@ -2,7 +2,7 @@
 
 # 1. Asynchronus Porgramming
 Pada aplikasi ini, pemrograman asynchronus digunakan ketika data dari api dipanggil ke tampilan<br>
-<img src="assets/img/async2.png" width="150">
+<img src="assets/img/async2.png" width="200"><br>
 Data yang dipanggil tidak langsung tampil pada halaman, tetapi data akan berjalan dibalik layar <br>
 <img src="assets/img/async.png" width="250">
 
@@ -17,7 +17,7 @@ Berikut adalah tampilan dari tema gelap dan terang. <br>
 # 3. SQF Lite
 Pada aplikasi ini, SQF LIte digunakan untuk menyimpan makanan favorit yang diambiln dari API. Ketika user memilih makanan yang disukai atau di favoritkan, aplikasi akan menyimpan makanan tersebut pada database lokal menggunakan SQF Lite. User kemudian bisa melihat makanan yang di favoritkan pada halaman bookmark.
 <br>
-Berikut adalah halaman bookmark makanan.
+Berikut adalah halaman bookmark makanan.<br>
 <img src="assets/img/bookmark.png" width="250"><br>
 
 # 4. Local Notification
