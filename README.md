@@ -23,6 +23,7 @@ Berikut adalah halaman bookmark makanan.
 
 
 
+<<<<<<< Updated upstream
 Paket yang digunakan
 cupertino_icons: ^1.0.6
 http: ^1.2.1 
@@ -31,6 +32,17 @@ flutter_feather_icons: ^2.0.0+1
 sqflite: ^2.3.3
 shared_preferences: ^2.2.3
 path: ^1.9.0
+=======
+# Paket yang digunakan
+
+cupertino_icons: ^1.0.6<br>
+http: ^1.2.1<br>
+google_fonts: ^6.2.1<br>
+flutter_feather_icons: ^2.0.0+1<br>
+sqflite: ^2.3.3<br>
+shared_preferences: ^2.2.3<br>
+path: ^1.9.0<br>
+>>>>>>> Stashed changes
 
 API yang digunakan
 https://www.themealdb.com/api.php 
