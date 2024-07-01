@@ -112,7 +112,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text('Register',style: GoogleFonts.poppins(fontWeight: FontWeight.w600),),
+        title: Text('Register',style: GoogleFonts.poppins(fontWeight: FontWeight.w600, color: Color.fromARGB(255, 169, 169, 169)),),
       ),
       body: Container(
         // decoration: BoxDecoration(

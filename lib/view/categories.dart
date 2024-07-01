@@ -3,7 +3,6 @@ import 'package:foodapp_new/view/mealByCat.dart';
 import 'package:foodapp_new/view_model/fetch_categories.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// ignore: must_be_immutable
 class CatPage extends StatelessWidget {
   CatPage({super.key});
 
@@ -11,6 +10,8 @@ class CatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -18,7 +19,10 @@ class CatPage extends StatelessWidget {
         centerTitle: true,
         title: Text(
           'Food Categories',
-          style: GoogleFonts.manrope(fontWeight: FontWeight.w700),
+          style: GoogleFonts.manrope(
+            fontWeight: FontWeight.w700,
+            color: isDarkTheme ? Colors.white : Colors.black,
+          ),
         ),
       ),
       body: Container(
@@ -41,15 +45,19 @@ class CatPage extends StatelessWidget {
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MealByCat(mealsByCat: cat.strCategory),
-                          ));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              MealByCat(mealsByCat: cat.strCategory),
+                        ),
+                      );
                     },
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: const Color.fromARGB(255, 233, 240, 244),
+                        color: isDarkTheme
+                            ? Colors.grey[850]
+                            : const Color.fromARGB(255, 233, 240, 244),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black26,
@@ -65,10 +73,12 @@ class CatPage extends StatelessWidget {
                             margin: EdgeInsets.only(top: 20, bottom: 20),
                             height: 100,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(cat.strCategoryThumb))),
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(cat.strCategoryThumb),
+                              ),
+                            ),
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -77,6 +87,7 @@ class CatPage extends StatelessWidget {
                               style: GoogleFonts.poppins(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
+                                color: isDarkTheme ? Colors.white : Colors.black,
                               ),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
@@ -89,7 +100,10 @@ class CatPage extends StatelessWidget {
                 },
               );
             } else if (snapshot.hasError) {
-              return Text('error');
+              return Text(
+                'error',
+                style: TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
+              );
             } else {
               return Center(
                 child: CircularProgressIndicator(),

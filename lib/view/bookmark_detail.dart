@@ -20,7 +20,7 @@ class DetailMakananBk extends StatelessWidget {
       type: CoolAlertType.success,
       text: message,
       animType: CoolAlertAnimType.slideInUp,
-      backgroundColor: Color.fromARGB(255, 35, 23, 80),
+      backgroundColor: Color.fromARGB(255, 20, 181, 79),
       onConfirmBtnTap: () {
         Navigator.of(context, rootNavigator: true).pop();
         Future.delayed(Duration(milliseconds: 100), () {

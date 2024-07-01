@@ -17,6 +17,8 @@ class Bookmark extends StatefulWidget {
 class _BookmarkState extends State<Bookmark> {
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -32,18 +34,15 @@ class _BookmarkState extends State<Bookmark> {
         child: FutureBuilder<List<MyMeals>>(
           future: NewDB().list(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            print(snapshot.connectionState);
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(),
               );
             } else if (snapshot.hasError) {
-              print(snapshot.data);
               return Center(
                 child: Text('error ${snapshot.error}'),
               );
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              print('kosong');
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -85,16 +84,18 @@ class _BookmarkState extends State<Bookmark> {
                       height: 100,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 230, 236, 230),
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 3,
-                                offset: Offset(0, 1))
-                          ]),
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        color: isDarkTheme
+                            ? Color.fromARGB(255, 111, 196, 114)
+                            : Color.fromARGB(255, 230, 236, 230),
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 3,
+                              offset: Offset(0, 1))
+                        ],
+                      ),
+                      margin: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                       child: Row(
                         children: [
                           Container(
@@ -103,8 +104,8 @@ class _BookmarkState extends State<Bookmark> {
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: NetworkImage(
-                                    bookmarks[index].strMealThumb),
+                                image:
+                                    NetworkImage(bookmarks[index].strMealThumb),
                               ),
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -116,12 +117,13 @@ class _BookmarkState extends State<Bookmark> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
-                                  padding:
-                                      EdgeInsets.only(left: 10, right: 10),
+                                  padding: EdgeInsets.only(left: 10, right: 10),
                                   child: Text(
                                     bookmarks[index].strMeal,
                                     style: GoogleFonts.poppins(
-                                      color: Colors.black,
+                                      color: isDarkTheme
+                                          ? Colors.white
+                                          : Colors.black,
                                       fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -183,12 +185,7 @@ class _BookmarkState extends State<Bookmark> {
               );
               break;
             case 2:
-              // Navigator.pushReplacement(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => Profile(),
-              //   ),
-              // );
+              // Do nothing, already on Bookmark page
               break;
             case 3:
               Navigator.pushReplacement(

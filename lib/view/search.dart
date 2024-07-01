@@ -17,10 +17,8 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController _search = TextEditingController();
-
   List<MealByName> _meals = [];
   final Searcher src = Searcher();
-  bool tema = false;
 
   Future<void> _searchMeals(String query) async {
     try {
@@ -35,6 +33,8 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
       body: Container(
         padding: EdgeInsets.only(top: 52),
@@ -44,31 +44,35 @@ class _SearchPageState extends State<SearchPage> {
               margin: const EdgeInsets.symmetric(horizontal: 20),
               padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
               decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(14)),
+                color: isDarkTheme ? Colors.grey[800] : Colors.white,
+                borderRadius: BorderRadius.circular(14),
+              ),
               child: TextField(
                 controller: _search,
                 onSubmitted: (value) {
                   _searchMeals(value);
                 },
                 decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        _searchMeals(_search.text);
-                      },
-                      icon: Icon(
-                        FeatherIcons.search,
-                        color: Color(0xfffb1b1b1),
-                      ),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      _searchMeals(_search.text);
+                    },
+                    icon: Icon(
+                      FeatherIcons.search,
+                      color: isDarkTheme ? Colors.white70 : Color(0xfffb1b1b1),
                     ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    hintText: "Search any recipe...",
-                    hintStyle: GoogleFonts.manrope(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xfffB1B1B1),
-                        height: 170 / 100)),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  hintText: "Search any recipe...",
+                  hintStyle: GoogleFonts.manrope(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: isDarkTheme ? Colors.white70 : const Color(0xfffB1B1B1),
+                    height: 170 / 100,
+                  ),
+                ),
               ),
             ),
             SizedBox(
@@ -79,7 +83,9 @@ class _SearchPageState extends State<SearchPage> {
                   ? Center(
                       child: Text(
                         'Search something here',
-                        style: GoogleFonts.manrope(),
+                        style: GoogleFonts.manrope(
+                          color: isDarkTheme ? Colors.white70 : Colors.black,
+                        ),
                       ),
                     )
                   : ListView.builder(
@@ -97,17 +103,18 @@ class _SearchPageState extends State<SearchPage> {
                           child: Container(
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
-                                color: tema
-                                    ? Colors.green.shade200
-                                    : Color.fromARGB(255, 222, 235, 205),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black26,
-                                    blurRadius: 10,
-                                    offset: Offset(0, 1),
-                                  )
-                                ]),
+                              color: isDarkTheme
+                                  ? const Color.fromARGB(255, 111, 196, 114)
+                                  : Color.fromARGB(255, 222, 235, 205),
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 10,
+                                  offset: Offset(0, 1),
+                                )
+                              ],
+                            ),
                             margin: EdgeInsets.symmetric(
                                 horizontal: 12, vertical: 4),
                             child: Column(
@@ -146,6 +153,9 @@ class _SearchPageState extends State<SearchPage> {
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.w600,
+                                                  color: isDarkTheme
+                                                      ? Colors.white
+                                                      : Colors.black,
                                                 ),
                                                 overflow: TextOverflow.ellipsis,
                                               ),
@@ -159,6 +169,9 @@ class _SearchPageState extends State<SearchPage> {
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.w500,
+                                                  color: isDarkTheme
+                                                      ? Colors.white70
+                                                      : Colors.black,
                                                 ),
                                                 overflow: TextOverflow.ellipsis,
                                               ),
@@ -172,17 +185,6 @@ class _SearchPageState extends State<SearchPage> {
                               ],
                             ),
                           ),
-                          // child: ListTile(
-                          //   title: Text(_meals[index].strMeal),
-                          //   subtitle: Column(
-                          //     crossAxisAlignment: CrossAxisAlignment.start,
-                          //     children: [
-                          //       Text(_meals[index].strArea ?? 'No area info'),
-                          //       Text(_meals[index].strCategory ??
-                          //           'No category info'),
-                          //     ],
-                          //   ),
-                          // ),
                         );
                       },
                     ),
@@ -222,12 +224,6 @@ class _SearchPageState extends State<SearchPage> {
               );
               break;
             case 1:
-              // Navigator.pushReplacement(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => SearchPage(),
-              //   ),
-              // );
               break;
             case 2:
               Navigator.pushReplacement(

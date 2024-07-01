@@ -38,7 +38,7 @@ class _ProfileState extends State<Profile> {
       type: CoolAlertType.success,
       text: message,
       animType: CoolAlertAnimType.slideInUp,
-      backgroundColor: Color.fromARGB(255, 35, 23, 80),
+      backgroundColor: Color.fromARGB(255, 20, 181, 79),
       onConfirmBtnTap: () {
         Auth().signOut();
         // Navigator.of(context, rootNavigator: true).pop();
@@ -58,17 +58,22 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'My Profile',
-          style: TextStyle(
-              fontSize: 24, color: Colors.black, fontWeight: FontWeight.w700),
+          style: GoogleFonts.manrope(
+            fontSize: 24,
+            color: Theme.of(context).textTheme.headlineSmall?.color,
+            fontWeight: FontWeight.w700,
+          ),
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout_rounded),
-            color: Colors.black,
+            color: Theme.of(context).textTheme.headlineSmall?.color,
             onPressed: () {
               showAlert(context, 'Logged out successfully');
               // Auth().signOut();
@@ -79,7 +84,7 @@ class _ProfileState extends State<Profile> {
             },
           )
         ],
-        backgroundColor: Colors.white10,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -148,7 +153,7 @@ class _ProfileState extends State<Profile> {
                   width: 150,
                   clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
-                      color: Colors.amber,
+                      color: Theme.of(context).colorScheme.primary,
                       borderRadius: BorderRadius.circular(150)),
                   child: _image != null
                       ? Image.file(_image!)
@@ -169,6 +174,7 @@ class _ProfileState extends State<Profile> {
                 style: GoogleFonts.manrope(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
+                  color: Theme.of(context).textTheme.bodyLarge?.color,
                 ),
               ),
             ),
@@ -179,7 +185,7 @@ class _ProfileState extends State<Profile> {
               height: 1,
               margin: EdgeInsets.only(bottom: 8),
               width: double.infinity,
-              color: Colors.grey,
+              color: Theme.of(context).dividerColor,
             ),
             const SizedBox(
               height: 12,
@@ -191,16 +197,17 @@ class _ProfileState extends State<Profile> {
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
-                        color: Color.fromARGB(255, 23, 25, 28))),
+                        color: Theme.of(context).textTheme.headlineSmall?.color)),
                 SizedBox(
                   height: 20,
                 ),
                 Container(
-                  child: const Row(
+                  child: Row(
                     children: [
                       Icon(
                         Icons.person,
                         size: 20,
+                        color: Theme.of(context).iconTheme.color,
                       ),
                       SizedBox(
                         width: 16,
@@ -209,7 +216,7 @@ class _ProfileState extends State<Profile> {
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
-                              color: Color.fromARGB(255, 23, 25, 28)))
+                              color: Theme.of(context).textTheme.bodyLarge?.color,))
                     ],
                   ),
                 ),
@@ -217,7 +224,7 @@ class _ProfileState extends State<Profile> {
                   height: 16,
                 ),
                 Container(
-                  child: const Row(
+                  child: Row(
                     children: [
                       Icon(
                         Icons.badge,
@@ -230,7 +237,7 @@ class _ProfileState extends State<Profile> {
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
-                              color: Color.fromARGB(255, 23, 25, 28)))
+                              color: Theme.of(context).textTheme.bodyLarge?.color))
                     ],
                   ),
                 ),
@@ -238,7 +245,7 @@ class _ProfileState extends State<Profile> {
                   height: 16,
                 ),
                 Container(
-                  child: const Row(
+                  child: Row(
                     children: [
                       Icon(
                         Icons.location_on,
@@ -251,7 +258,7 @@ class _ProfileState extends State<Profile> {
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
-                              color: Color.fromARGB(255, 23, 25, 28)))
+                              color: Theme.of(context).textTheme.bodyLarge?.color,))
                     ],
                   ),
                 ),

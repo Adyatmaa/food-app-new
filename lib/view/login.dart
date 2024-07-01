@@ -60,7 +60,7 @@ class _LoginState extends State<Login> {
       type: CoolAlertType.success,
       text: message,
       animType: CoolAlertAnimType.slideInUp,
-      backgroundColor: Color.fromARGB(255, 35, 23, 80),
+      backgroundColor: Color.fromARGB(255, 20, 181, 79),
       onConfirmBtnTap: () {
         Auth().signInWithEmailAndPassword(
           email: _controllerEmail.text,

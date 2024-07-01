@@ -46,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
@@ -166,9 +167,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       width: MediaQuery.of(context).size.width,
                                       decoration: BoxDecoration(
                                           color: tema
-                                              ? Colors.green.shade200
+                                              ? const Color.fromARGB(
+                                                  255, 111, 196, 114)
                                               : Color.fromARGB(
-                                                  255, 222, 235, 205),
+                                                  255, 255, 255, 255),
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           boxShadow: [
@@ -223,6 +225,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             fontSize: 20,
                                                             fontWeight:
                                                                 FontWeight.w600,
+                                                            color: isDarkTheme
+                                                                ? Colors.white
+                                                                : Colors.white,
                                                           ),
                                                           overflow: TextOverflow
                                                               .ellipsis,
@@ -241,6 +246,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             fontSize: 10,
                                                             fontWeight:
                                                                 FontWeight.w500,
+                                                            color: isDarkTheme
+                                                                ? Colors.white
+                                                                : Colors.white,
                                                           ),
                                                           overflow: TextOverflow
                                                               .ellipsis,
@@ -313,7 +321,7 @@ Widget banner(BuildContext context) => AspectRatio(
         margin: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
-            color: const Color(0xfffA7DC63),
+            color: const Color.fromARGB(255, 111, 196, 114),
             boxShadow: [
               BoxShadow(
                 color: Colors.black26,
@@ -364,7 +372,7 @@ Widget banner(BuildContext context) => AspectRatio(
                       child: Text(
                         'Explore',
                         style: GoogleFonts.manrope(
-                            color: const Color(0xfff7CBA2C),
+                            color: Color.fromARGB(255, 9, 130, 54),
                             fontWeight: FontWeight.w800),
                       ),
                     )
